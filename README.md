@@ -27,8 +27,8 @@ use TorMorten\Eventy\Facades\Eventy;
 Eventy::addFilter('rapidez.site.index', function ($sitemaps) {
     // Add your custom sitemap URL here
     $sitemaps[] = [
-        'url' => url('/some-dynamic-url.xml'),
-        'updated_at' => now()->toDateTimeString(),
+        'loc' => url('/some-dynamic-url.xml'),
+        'lastmod' => now()->toDateTimeString(),
     ];
 
     return $sitemaps;

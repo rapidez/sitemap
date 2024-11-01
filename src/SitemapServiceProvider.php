@@ -12,8 +12,7 @@ class SitemapServiceProvider extends ServiceProvider
         $this
             ->bootRoutes()
             ->bootViews()
-            ->bootPublishables()
-            ->bootFilters();
+            ->bootPublishables();
     }
 
     public function bootRoutes() : self
@@ -35,16 +34,6 @@ class SitemapServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/rapidez-sitemap'),
         ], 'rapidez-sitemap-views');
-
-        return $this;
-    }
-
-    public function bootFilters() : self
-    {
-        Eventy::addFilter('rapidez.site.index', function ($sitemaps) {
-            $sitemaps[] = ['loc' => url('/some-dynamic-url.xml'), 'lastmod' => now()->toDateTimeString()];
-            return $sitemaps;
-        });
 
         return $this;
     }
