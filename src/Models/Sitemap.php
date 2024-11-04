@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Rapidez\Core\Models\Model;
-use Rapidez\Core\Models\Scopes\ForCurrentStoreScope;
+use Rapidez\Core\Models\Scopes\ForCurrentStoreWithoutLimitScope;
 use RuntimeException;
 use SimpleXMLElement;
 
@@ -18,14 +18,14 @@ class Sitemap extends Model
 
     protected static function booting()
     {
-        static::addGlobalScope(new ForCurrentStoreScope('sitemap'));
+        static::addGlobalScope(new ForCurrentStoreWithoutLimitScope('sitemap_id'));
     }
 
     public static function getCachedByStoreId(): ?array
     {
         $cacheKey = 'sitemaps.'.config('rapidez.store');
 
-        return Cache::rememberForever($cacheKey, function () {
+        return Cache::remember($cacheKey, now()->addDay(), function () {
             return self::get()
                 ->flatMap(fn ($sitemap) => self::getSitemapsFromIndex($sitemap->toArray()))
                 ->toArray();
