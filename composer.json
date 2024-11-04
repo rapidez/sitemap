@@ -34,9 +34,11 @@
         }
     },
     "scripts": {
+        "test": "phpunit",
         "analyse": "phpstan",
         "style": "pint --test",
         "quality": [
+            "@test",
             "@analyse",
             "@style"
         ],
