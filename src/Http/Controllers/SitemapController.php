@@ -14,7 +14,7 @@ class SitemapController
         $sitemaps = Sitemap::getCachedByStoreId();
 
         // Allow additional sitemaps to be added via the Eventy filter
-        $sitemaps = Eventy::filter('rapidez.site.index', $sitemaps);
+        $sitemaps = Eventy::filter('rapidez.sitemap.index', $sitemaps);
 
         // Return XML response
         return response()

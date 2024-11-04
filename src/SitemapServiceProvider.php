@@ -3,7 +3,6 @@
 namespace Rapidez\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
-use TorMorten\Eventy\Facades\Eventy;
 
 class SitemapServiceProvider extends ServiceProvider
 {

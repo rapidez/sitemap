@@ -24,7 +24,7 @@ To do this, simply add the following code to the appropriate place in your appli
 ```php
 use TorMorten\Eventy\Facades\Eventy;
 
-Eventy::addFilter('rapidez.site.index', function ($sitemaps) {
+Eventy::addFilter('rapidez.sitemap.index', function ($sitemaps) {
     // Add your custom sitemap URL here
     $sitemaps[] = [
         'loc' => url('/some-dynamic-url.xml'),
