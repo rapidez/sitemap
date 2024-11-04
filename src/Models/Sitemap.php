@@ -2,13 +2,13 @@
 
 namespace Rapidez\Sitemap\Models;
 
+use Exception;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Rapidez\Core\Models\Model;
 use Rapidez\Core\Models\Scopes\ForCurrentStoreScope;
-use SimpleXMLElement;
 use RuntimeException;
-use Exception;
-use Illuminate\Support\Facades\Log;
+use SimpleXMLElement;
 
 class Sitemap extends Model
 {
