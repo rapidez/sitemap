@@ -3,8 +3,8 @@
 namespace Rapidez\Sitemap\Http\Controllers;
 
 use Illuminate\Http\Response;
-use TorMorten\Eventy\Facades\Eventy;
 use Rapidez\Sitemap\Models\Sitemap;
+use TorMorten\Eventy\Facades\Eventy;
 
 class SitemapController
 {
@@ -14,7 +14,7 @@ class SitemapController
         $sitemaps = Sitemap::getCachedByStoreId();
 
         // Allow additional sitemaps to be added via the Eventy filter
-        $sitemaps = Eventy::filter('rapidez.sitemap.index', $sitemaps);
+        $sitemaps = Eventy::filter('rapidez.sitemap.index', $sitemaps); // @phpstan-ignore-line
 
         // Return XML response
         return response()
