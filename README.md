@@ -17,14 +17,14 @@ php artisan vendor:publish --tag=rapidez-sitemap-views
 
 ## Adding Additional Sitemap Indexes with Eventy
 
-If you have additional indexes, such as CMS pages or other custom routes, you can dynamically add them to your sitemap index using the `rapidez.site.index` filter provided by Eventy.
+If you have additional indexes, such as CMS pages or other custom routes, you can dynamically add them to your sitemap index based on the Store ID using the `rapidez.site.{storeId}` filter provided by Eventy.
 
 To do this, simply add the following code to the appropriate place in your application (e.g., in a service provider or a dedicated sitemap configuration file):  
 
 ```php
 use TorMorten\Eventy\Facades\Eventy;
 
-Eventy::addFilter('rapidez.sitemap.index', function ($sitemaps) {
+Eventy::addFilter('rapidez.sitemap.{storeId}', function ($sitemaps) {
     // Add your custom sitemap URL here
     $sitemaps[] = [
         'loc' => url('/some-dynamic-url.xml'),

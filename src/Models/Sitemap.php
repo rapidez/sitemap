@@ -4,19 +4,29 @@ namespace Rapidez\Sitemap\Models;
 
 use Illuminate\Support\Facades\Cache;
 use Rapidez\Core\Models\Model;
+use Rapidez\Core\Models\Scopes\ForCurrentStoreScope;
 use SimpleXMLElement;
+use RuntimeException;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class Sitemap extends Model
 {
     protected $table = 'sitemap';
+
+    protected $primaryKey = 'sitemap_id';
+
+    protected static function booting()
+    {
+        static::addGlobalScope(new ForCurrentStoreScope('sitemap'));
+    }
 
     public static function getCachedByStoreId(): ?array
     {
         $cacheKey = 'sitemaps.'.config('rapidez.store');
 
         return Cache::rememberForever($cacheKey, function () {
-            return self::where('store_id', config('rapidez.store'))
-                ->get()
+            return self::get()
                 ->flatMap(fn ($sitemap) => self::getSitemapsFromIndex($sitemap->toArray()))
                 ->toArray();
         });
@@ -30,7 +40,7 @@ class Sitemap extends Model
             $sitemapXml = simplexml_load_file($sitemapUrl, SimpleXMLElement::class, LIBXML_NOERROR | LIBXML_NOWARNING);
 
             if ($sitemapXml === false) {
-                throw new \RuntimeException('Failed to load sitemap XML.');
+                throw new RuntimeException('Failed to load sitemap XML.');
             }
 
             $sitemapOutput = json_decode(json_encode($sitemapXml) ?: '', true);
@@ -38,8 +48,8 @@ class Sitemap extends Model
             return $sitemapOutput['sitemap'] ?? [
                 ['loc' => $sitemapUrl, 'lastmod' => $sitemap['sitemap_time']],
             ];
-        } catch (\Exception $e) {
-            \Log::error("Error loading sitemap from URL: $sitemapUrl", ['exception' => $e]);
+        } catch (Exception $e) {
+            Log::error("Error loading sitemap from URL: $sitemapUrl", ['exception' => $e]);
 
             return [];
         }
