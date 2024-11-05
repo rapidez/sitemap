@@ -1,37 +1,41 @@
-# Rapidez :package_name_without_prefix
-<!--delete-->
-This repository can be used as template for a new Rapidez package.
+# Rapidez sitemap
 
-- Click on "Use this template" on the top of this Github repo page
-- Run `php ./configure.php`
-
-Credits to [`spatie/package-skeleton-laravel`](https://github.com/spatie/package-skeleton-laravel) for the inpiration for this template.
-
-Keep in mind that if you contribute to this template; it should work for official and unofficial packages!
-- `rapidez/something`
-- `someone/rapidez-something`
-<!--/delete-->
-:package_description
+Rapidez sitemap index through Eventy filters
 
 ## Installation
 
 ```
-composer require :vendor_slug/:package_slug
-```
-
-## Configuration
-
-You can publish the config with:
-```
-php artisan vendor:publish --tag=rapidez-:package_slug_without_prefix-config
+composer require rapidez/sitemap
 ```
 
 ## Views
 
 You can publish the views with:
 ```
-php artisan vendor:publish --tag=rapidez-:package_slug_without_prefix-views
+php artisan vendor:publish --tag=rapidez-sitemap-views
 ```
+
+## Adding Additional Sitemap Indexes with Eventy
+
+If you have additional indexes, such as CMS pages or other custom routes, you can dynamically add them to your sitemap index based on the Store ID using the `rapidez.site.{storeId}` filter provided by Eventy.
+
+To do this, simply add the following code to the appropriate place in your application (e.g., in a service provider or a dedicated sitemap configuration file):  
+
+```php
+use TorMorten\Eventy\Facades\Eventy;
+
+Eventy::addFilter('rapidez.sitemap.{storeId}', function ($sitemaps) {
+    // Add your custom sitemap URL here
+    $sitemaps[] = [
+        'loc' => url('/some-dynamic-url.xml'),
+        'lastmod' => now()->toDateTimeString(),
+    ];
+
+    return $sitemaps;
+});
+```
+
+With this filter in place, the URL `/some-dynamic-url.xml` will be added to your sitemap index, allowing you to dynamically include additional sections of your site, such as CMS-generated pages, product categories, or other custom data sources.
 
 ## License
 
