@@ -13,7 +13,6 @@ class GenerateSitemap extends Command
 
     protected $description = 'Generate the sitemap and run sitemap generate action';
 
-
     public function handle(): int
     {
         foreach (Rapidez::getStores() ?: [] as $store) {

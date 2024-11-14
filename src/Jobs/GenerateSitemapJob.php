@@ -12,8 +12,7 @@ class GenerateSitemapJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
 
-    public function __construct(protected int $storeId)
-    {}
+    public function __construct(protected int $storeId) {}
 
     public function handle(): void
     {
