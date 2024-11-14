@@ -21,9 +21,9 @@ class Sitemap extends Model
         static::addGlobalScope(new ForCurrentStoreWithoutLimitScope('sitemap_id'));
     }
 
-    public static function getCachedByStoreId(): ?array
+    public static function getCachedByStoreId(int $storeId): ?array
     {
-        $cacheKey = 'sitemaps.'.config('rapidez.store');
+        $cacheKey = 'rapidez.sitemaps.'.$storeId;
 
         return Cache::remember($cacheKey, now()->addDay(), function () {
             return self::get()
