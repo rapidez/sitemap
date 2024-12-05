@@ -11,7 +11,6 @@ class SitemapServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this
-            ->bootConfig()
             ->bootCommands()
             ->bootRoutes()
             ->bootViews()
@@ -23,17 +22,6 @@ class SitemapServiceProvider extends ServiceProvider
         $this->commands([
             GenerateSitemap::class,
         ]);
-
-        if (config('rapidez.sitemap.schedule_generate_command')) {
-            Schedule::command('rapidez:sitemap:generate')->twiceDaily(0, 12);
-        }
-
-        return $this;
-    }
-
-    public function bootConfig(): self
-    {
-        $this->mergeConfigFrom(__DIR__.'/../config/rapidez/sitemap.php', 'rapidez.sitemap');
 
         return $this;
     }

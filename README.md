@@ -16,21 +16,19 @@ php artisan vendor:publish --tag=rapidez-sitemap-views
 ```
 
 ## Sitemap Generation
-This package includes a configuration option to control the automatic scheduling of the sitemap generation command.
 
-In the package’s service provider, if `schedule_generate_command` is enabled, the command is scheduled:
-
-```php
-if (config('rapidez.sitemap.schedule_generate_command')) {
-    Schedule::command('rapidez:sitemap:generate')->twiceDaily(0, 12);
-}
-```
-
-To disable scheduling, set this in your .env: `RAPIDEZ_SITEMAP_SCHEDULE_GENERATE=false`.
-
-To run the sitemap generation manually, use:
+To generate the sitemap manually, use:
 ```bash
 php artisan rapidez:sitemap:generate
+```
+
+If you want to schedule the sitemap generation, add the following to your application's `app/Console/Kernel.php`:
+
+```php
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('rapidez:sitemap:generate')->twiceDaily(0, 12);
+}
 ```
 
 ## Hooking into the Generation Action
