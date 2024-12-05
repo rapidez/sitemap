@@ -22,13 +22,10 @@ To generate the sitemap manually, use:
 php artisan rapidez:sitemap:generate
 ```
 
-If you want to schedule the sitemap generation, add the following to your application's `app/Console/Kernel.php`:
+If you'd like to schedule the sitemap generation you can add the `rapidez:sitemap:generate` command in `routes/console.php`, for more information see [Task Scheduling](https://laravel.com/docs/11.x/scheduling)
 
 ```php
-protected function schedule(Schedule $schedule)
-{
-    $schedule->command('rapidez:sitemap:generate')->twiceDaily(0, 12);
-}
+Schedule::command('rapidez:sitemap:generate')->twiceDaily(0, 12);
 ```
 
 ## Hooking into the Generation Action
