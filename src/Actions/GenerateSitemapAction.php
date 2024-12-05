@@ -14,7 +14,7 @@ class GenerateSitemapAction
         return $sitemap;
     }
 
-    public function addUrl($url = null, $lastMod = null): string
+    public function addUrl(?string $url = null, ?string $lastMod = null): string
     {
         $sitemap = '<url>';
 
