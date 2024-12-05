@@ -2,7 +2,6 @@
 
 namespace Rapidez\Sitemap;
 
-use Illuminate\Support\Facades\Schedule;
 use Illuminate\Support\ServiceProvider;
 use Rapidez\Sitemap\Commands\GenerateSitemap;
 
