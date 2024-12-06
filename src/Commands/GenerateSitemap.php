@@ -18,7 +18,7 @@ class GenerateSitemap extends Command
         Eventy::action('rapidez.sitemap.generate');
 
         foreach (Rapidez::getStores() ?: [] as $store) {
-            GenerateSitemapJob::dispatch($store['store_id']);
+            GenerateSitemapJob::dispatchSync($store['store_id']);
         }
 
         return Command::SUCCESS;
