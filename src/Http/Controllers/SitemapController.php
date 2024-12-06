@@ -15,7 +15,7 @@ class SitemapController
 
         $sitemapPath = $path.'/'.$storeId.'/sitemap.xml';
 
-        if (!$disk->exists($sitemapPath)) {
+        if (! $disk->exists($sitemapPath)) {
             abort(404);
         }
 

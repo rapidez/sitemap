@@ -4,7 +4,7 @@ namespace Rapidez\Sitemap\Actions;
 
 class GenerateSitemapAction
 {
-    public function createSitemapIndex(array $sitemapIndexes) : string
+    public function createSitemapIndex(array $sitemapIndexes): string
     {
         $sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
         $sitemap .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';

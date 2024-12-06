@@ -8,10 +8,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
-use Rapidez\Sitemap\Models\Sitemap;
-use Rapidez\Sitemap\Actions\GenerateSitemapAction;
-use TorMorten\Eventy\Facades\Eventy;
 use Rapidez\Core\Facades\Rapidez;
+use Rapidez\Sitemap\Actions\GenerateSitemapAction;
+use Rapidez\Sitemap\Models\Sitemap;
+use TorMorten\Eventy\Facades\Eventy;
 
 class GenerateSitemapJob implements ShouldQueue
 {
@@ -27,10 +27,11 @@ class GenerateSitemapJob implements ShouldQueue
         $sitemaps = Sitemap::getCachedByStoreId($this->storeId);
 
         // Allow additional sitemaps via Eventy filter
+        /** @phpstan-ignore-next-line */
         $sitemaps = Eventy::filter('rapidez.sitemap.'.$this->storeId, $sitemaps);
 
         // Generate sitemap content
-        $sitemapContent = $action->createSitemapIndex($sitemaps);
+        $sitemapContent = $action->createSitemapIndex((array) $sitemaps);
 
         // Get storage disk and path from config
         $disk = Storage::disk(config('rapidez-sitemap.disk', 'public'));
