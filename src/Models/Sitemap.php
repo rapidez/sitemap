@@ -3,7 +3,6 @@
 namespace Rapidez\Sitemap\Models;
 
 use Exception;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Rapidez\Core\Models\Model;
 use Rapidez\Core\Models\Scopes\ForCurrentStoreWithoutLimitScope;
@@ -24,8 +23,8 @@ class Sitemap extends Model
     public static function getByStoreId(int $storeId): ?array
     {
         return self::get()
-                ->flatMap(fn ($sitemap) => self::getSitemapsFromIndex($sitemap->toArray()))
-                ->toArray();
+            ->flatMap(fn ($sitemap) => self::getSitemapsFromIndex($sitemap->toArray()))
+            ->toArray();
     }
 
     protected static function getSitemapsFromIndex(array $sitemap): array
