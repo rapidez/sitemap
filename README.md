@@ -8,6 +8,19 @@ Rapidez sitemap index through Eventy filters
 composer require rapidez/sitemap
 ```
 
+## Configuration
+
+You can publish the configuration file with:
+```bash
+php artisan vendor:publish --tag=config --provider="Rapidez\Sitemap\SitemapServiceProvider"
+```
+
+This will create a `config/rapidez-sitemap.php` file where you can configure:
+- `disk`: The Laravel filesystem disk to use (defaults to 'public')
+- `path`: The path within the disk where sitemaps will be stored (defaults to root)
+
+Make sure the specified disk is properly configured in your application's `config/filesystems.php`.
+
 ## Views
 
 You can publish the views with:
@@ -21,6 +34,8 @@ To generate the sitemap manually, use:
 ```bash
 php artisan rapidez:sitemap:generate
 ```
+
+This command will generate `sitemap.xml` for the default store and `sitemap_{store_id}.xml` for additional stores in your configured storage location.
 
 If you'd like to schedule the sitemap generation you can add the `rapidez:sitemap:generate` command in `routes/console.php`, for more information see [Task Scheduling](https://laravel.com/docs/11.x/scheduling)
 
@@ -49,15 +64,13 @@ use TorMorten\Eventy\Facades\Eventy;
 Eventy::addFilter('rapidez.sitemap.{storeId}', function ($sitemaps) {
     // Add your custom sitemap URL here
     $sitemaps[] = [
-        'loc' => url('/some-dynamic-url.xml'),
-        'lastmod' => now()->toDateTimeString(),
+        'url' => 'your-custom-sitemap.xml',
+        'lastmod' => now()->toDateString(),
     ];
-
+    
     return $sitemaps;
-});
+}, 20, 1);
 ```
-
-With this filter in place, the URL `/some-dynamic-url.xml` will be added to your sitemap index, allowing you to dynamically include additional sections of your site, such as CMS-generated pages, product categories, or other custom data sources.
 
 ## License
 

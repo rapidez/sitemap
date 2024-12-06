@@ -15,11 +15,11 @@ class GenerateSitemap extends Command
 
     public function handle(): int
     {
+        Eventy::action('rapidez.sitemap.generate');
+
         foreach (Rapidez::getStores() ?: [] as $store) {
             GenerateSitemapJob::dispatch($store['store_id']);
         }
-
-        Eventy::action('rapidez.sitemap.generate');
 
         return Command::SUCCESS;
     }
