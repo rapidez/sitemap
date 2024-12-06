@@ -21,15 +21,11 @@ class Sitemap extends Model
         static::addGlobalScope(new ForCurrentStoreWithoutLimitScope('sitemap_id'));
     }
 
-    public static function getCachedByStoreId(int $storeId): ?array
+    public static function getByStoreId(int $storeId): ?array
     {
-        $cacheKey = 'rapidez.sitemaps.'.$storeId;
-
-        return Cache::remember($cacheKey, now()->addDay(), function () {
-            return self::get()
+        return self::get()
                 ->flatMap(fn ($sitemap) => self::getSitemapsFromIndex($sitemap->toArray()))
                 ->toArray();
-        });
     }
 
     protected static function getSitemapsFromIndex(array $sitemap): array

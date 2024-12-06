@@ -24,7 +24,7 @@ class GenerateSitemapJob implements ShouldQueue
         Rapidez::setStore($this->storeId);
 
         // Get sitemaps for the store
-        $sitemaps = Sitemap::getCachedByStoreId($this->storeId);
+        $sitemaps = Sitemap::getByStoreId($this->storeId);
 
         // Allow additional sitemaps via Eventy filter
         /** @phpstan-ignore-next-line */
