@@ -3,22 +3,23 @@
 namespace Rapidez\Sitemap\Http\Controllers;
 
 use Illuminate\Http\Response;
-use Rapidez\Sitemap\Models\Sitemap;
-use TorMorten\Eventy\Facades\Eventy;
+use Illuminate\Support\Facades\Storage;
 
 class SitemapController
 {
-    public function index(): Response
+    public function __invoke(): Response
     {
-        // Retrieve cached sitemaps for the current store
-        $sitemaps = Sitemap::getCachedByStoreId();
+        $storeId = config('rapidez.store');
+        $disk = Storage::disk(config('rapidez-sitemap.disk', 'public'));
+        $path = trim(config('rapidez-sitemap.path', 'rapidez-sitemaps'), '/');
 
-        // Allow additional sitemaps to be added via the Eventy filter
-        $sitemaps = Eventy::filter('rapidez.sitemap.'.config('rapidez.store'), $sitemaps); // @phpstan-ignore-line
+        $sitemapPath = $path.'/'.$storeId.'/sitemap.xml';
 
-        // Return XML response
-        return response()
-            ->view('rapidez-sitemap::sitemaps.index', compact('sitemaps'))
+        if (! $disk->exists($sitemapPath)) {
+            abort(404);
+        }
+
+        return response($disk->get($sitemapPath))
             ->header('Content-Type', 'application/xml');
     }
 }

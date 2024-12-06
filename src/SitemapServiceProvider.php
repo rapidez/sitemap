@@ -3,37 +3,30 @@
 namespace Rapidez\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
+use Rapidez\Sitemap\Commands\GenerateSitemap;
 
 class SitemapServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this
-            ->bootRoutes()
-            ->bootViews()
-            ->bootPublishables();
-    }
-
-    public function bootRoutes(): self
-    {
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-
-        return $this;
-    }
-
-    public function bootViews(): self
-    {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'rapidez-sitemap');
-
-        return $this;
-    }
-
-    public function bootPublishables(): self
-    {
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/rapidez-sitemap'),
-        ], 'rapidez-sitemap-views');
+            __DIR__.'/../config/sitemap.php' => config_path('rapidez-sitemap.php'),
+        ], 'config');
 
-        return $this;
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                GenerateSitemap::class,
+            ]);
+        }
+
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'rapidez-sitemap');
+    }
+
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/sitemap.php', 'rapidez-sitemap'
+        );
     }
 }
