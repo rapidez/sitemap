@@ -20,7 +20,6 @@ class SitemapServiceProvider extends ServiceProvider
         }
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'rapidez-sitemap');
     }
 
     public function register(): void
