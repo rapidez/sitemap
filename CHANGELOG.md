@@ -1,11 +1,11 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/sitemap/compare/1.1.2...1.1.2)
-## [1.1.2](https://github.com/rapidez/sitemap/releases/tag/1.1.2) - 2024-12-13
+[Unreleased changes](https://github.com/rapidez/sitemap/compare/3.0.0...3.0.0)
+## [3.0.0](https://github.com/rapidez/sitemap/releases/tag/3.0.0) - 2025-01-22
 
-### Changed
+### Added
 
-- Updated dev dependencies for Rapidez V3 
+- Rapidez v3 support (0fd540c)
 
 ## [1.1.1](https://github.com/rapidez/sitemap/releases/tag/1.1.1) - 2024-12-11
 
