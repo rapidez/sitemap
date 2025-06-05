@@ -18,7 +18,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.1",
-        "rapidez/core": "^2.0|^3.0",
+        "rapidez/core": "^4.0",
         "ext-simplexml": "*"
     },
     "require-dev": {
